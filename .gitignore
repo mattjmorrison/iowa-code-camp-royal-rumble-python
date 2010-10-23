@@ -6,3 +6,4 @@ develop-eggs
 *.egg-info
 *.idea
 *~
+data_db
