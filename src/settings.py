@@ -92,7 +92,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'picoblog',
-    'tweeter',
 )
 
-AUTH_PROFILE_MODULE = 'tweeter.Tweeter'
+AUTH_PROFILE_MODULE = 'picoblog.Tweeter'
