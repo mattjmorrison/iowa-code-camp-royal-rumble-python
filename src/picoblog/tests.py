@@ -1,12 +1,18 @@
 from django import test
 import mock
-from picoblog.models import Picoblog
+from tweeter.models import Tweeter
+from django.contrib.auth.models import User
 
-class PicoblogTests(test.TestCase):
+class TweeterTests(test.TestCase):
 
-    @mock.patch('picoblog.models.Picoblog.objects')
-    def should_allow_users_to_post_messages(self, picoblog_mock):
-        Picoblog.post_message("Matt", "Hello")
-        self.assertEqual(((), {'user':'Matt', 'message':'Hello'}),
-                         picoblog_mock.create.call_args)
+    def should_get_tweeter_from_django_user_profile(self):
+        self.assertRaises(Tweeter.DoesNotExist, User().get_profile)
 
+    def should_allow_tweeters_to_follow_other_tweeters(self):
+        tweeter_one = Tweeter()
+        tweeter_two = Tweeter()
+        with mock.patch('tweeter.models.Tweeter.followed_tweeters') as follow_mock:
+            tweeter_one.follow(tweeter_two)
+            self.assertEqual(((tweeter_two,), {}), follow_mock.add.call_args)
+
+    
