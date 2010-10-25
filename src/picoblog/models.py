@@ -18,12 +18,15 @@ class Tweeter(models.Model):
     def post_message(self, message):
         Picoblog.post_message(self, message)
 
+    @property
     def posts(self):
         return Picoblog.objects.filter(tweeter=self)
 
+    @property
     def followers_tweets(self):
         criteria = None
         for tweeter in self.followed_tweeters.all():
             criteria = Q(tweeter=tweeter)
 
+        #TODO try tweeter__in=self.followed_tweeters.all
         return Picoblog.objects.filter(criteria)
