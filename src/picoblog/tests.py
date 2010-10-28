@@ -1,46 +1,55 @@
-import mock
 from django import test
-from picoblog.models import Tweeter
+from django.core.urlresolvers import reverse as reverse_url
 from django.contrib.auth.models import User
+from picoblog.models import Timeline, Tweeter
 
-class TweeterTests(test.TestCase):
+class TestPicoblogAcceptance(test.TestCase):
 
-    def should_get_tweeter_from_django_user_profile(self):
-        self.assertRaises(Tweeter.DoesNotExist, User().get_profile)
+    def setUp(self):
+        self.client = test.Client()
+        self.client.login(username="matt", password="asdf")
+        user = User.objects.get(pk=1)
+        for i in range(6):
+            Timeline.objects.create(user=user, message="Message %s" % i)
 
-    @mock.patch('picoblog.models.Tweeter.followed_tweeters')
-    def should_allow_tweeters_to_follow_other_tweeters(self, follow_mock):
-        tweeter = Tweeter()
-        Tweeter().follow(tweeter)
-        self.assertEqual(((tweeter,), {}), follow_mock.add.call_args)
 
-    @mock.patch('picoblog.models.Picoblog.objects')
-    def should_allow_tweeters_to_add_messages_to_timeline(self, picoblog_mock):
-        tweeter = Tweeter()
-        tweeter.post_message("sample message")
-        self.assertEqual(((), {'user':tweeter, 'message':'sample message'}),
-                         picoblog_mock.create.call_args)
+    def should_show_all_recent_tweets_on_homepage(self):
+        client = test.Client()
+        response = client.get(reverse_url('picoblog:main'))
+        self.assertEqual(5, len(response.context['timeline']))
+        self.assertEqual(Timeline.objects.all().order_by('-update_timestamp')[0],
+                         response.context['timeline'][0])
 
-    @mock.patch('picoblog.models.Picoblog.objects.filter')
-    def should_retrieve_all_tweets_for_tweeter(self, timeline_filter):
-        timeline_filter.return_value = []
-        tweeter = Tweeter()
-        self.assertEqual([], tweeter.posts())
-        self.assertEqual(((), {'tweeter':tweeter}), timeline_filter.call_args)
+    def should_show_timeline_of_5_most_recent_tweets(self):
+        response = self.client.get(reverse_url('picoblog:main'))
+        self.assertEqual(5, len(response.context['timeline']))
+        self.assertEqual(Timeline.objects.all().order_by('-update_timestamp')[0],
+                         response.context['timeline'][0])
 
-    @mock.patch('picoblog.models.Picoblog.objects.filter')
-    @mock.patch('picoblog.models.Q')
-    def should_retrieve_all_tweets_for_a_tweeters_followers(self, q_mock, filter_mock):
-        filter_mock.return_value = []
-        q_mock.return_value = q_mock
+    def should_let_user_add_messages(self):
+        self.client.login(username="matt", password="asdf")
+        response = self.client.post(reverse_url('picoblog:main'),
+                         {'message':'Hello picoblog readers'}, follow=True)
+        self.assertEqual(200, response.status_code)
 
-        tweeter = Tweeter.objects.create(user=User.objects.create(username='x'))
-        t2 = Tweeter.objects.create(user=User.objects.create(username='y'))
-        tweeter.followed_tweeters.add(t2)
+    def should_not_show_tweets_of_non_followed_tweeters(self):
+        user = User.objects.create(username="sarah")
+        Tweeter.objects.create(user=user)
+        Timeline.objects.create(user=user, message='first post')
+        response = self.client.get(reverse_url('picoblog:main'))
+        for message in response.context['timeline']:
+            self.assertNotEqual('first post', message.message)
 
-        self.assertEqual([], tweeter.followers_tweets())
-        self.assertEqual(((q_mock,), {}), filter_mock.call_args)
+class TestFollowerAcceptance(test.TestCase):
 
-        self.assertEqual(((), {'tweeter':t2}), q_mock.call_args)
-        
-        
+    def setUp(self):
+        self.user = User.objects.get(pk=1)
+        self.other_users = [User.objects.get(pk=2),
+                            User.objects.get(pk=3)]
+        self.client = test.Client()
+        self.client.login(username="matt", password="asdf")
+
+    def should_allow_user_to_follow_other_users(self):
+        response = self.client.get(reverse_url('picoblog:follow',
+                                               kwargs={'id':2}), follow=True)
+        self.assertEqual([self.other_users[0]], list(response.context['followed_tweeters']))

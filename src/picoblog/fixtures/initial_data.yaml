@@ -1,0 +1,60 @@
+- fields:
+    date_joined: 2010-10-23 08:06:14.059542
+    email: mattj.morrison@gmail.com
+    first_name: ''
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_login: 2010-10-23 08:06:14.059542
+    last_name: ''
+    password: sha1$9679f$1756ab6fc0afc039e90a4499a608a8d4908a961c
+    user_permissions: []
+    username: matt
+  model: auth.user
+  pk: 1
+- pk: 1
+  model: picoblog.tweeter
+  fields:
+    followed_tweeters: []
+    user: 1
+- fields:
+    date_joined: 2010-10-23 08:06:14.059542
+    email: mattj.morrison@gmail.com
+    first_name: ''
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_login: 2010-10-23 08:06:14.059542
+    last_name: ''
+    password: sha1$9679f$1756ab6fc0afc039e90a4499a608a8d4908a961c
+    user_permissions: []
+    username: carl
+  model: auth.user
+  pk: 2
+- pk: 2
+  model: picoblog.tweeter
+  fields:
+    followed_tweeters: []
+    user: 2
+- fields:
+    date_joined: 2010-10-23 08:06:14.059542
+    email: mattj.morrison@gmail.com
+    first_name: ''
+    groups: []
+    is_active: true
+    is_staff: true
+    is_superuser: true
+    last_login: 2010-10-23 08:06:14.059542
+    last_name: ''
+    password: sha1$9679f$1756ab6fc0afc039e90a4499a608a8d4908a961c
+    user_permissions: []
+    username: steve
+  model: auth.user
+  pk: 3
+- pk: 3
+  model: picoblog.tweeter
+  fields:
+    followed_tweeters: []
+    user: 3

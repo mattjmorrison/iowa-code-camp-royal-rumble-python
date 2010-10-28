@@ -1,32 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Q
 
-class Picoblog(models.Model):
-    tweeter = models.ForeignKey('Tweeter')
+class Timeline(models.Model):
+    user = models.ForeignKey(User)
+    message = models.CharField(max_length=60)
+    update_timestamp = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.message
+
     @staticmethod
-    def post_message(user, message):
-        Picoblog.objects.create(user=user, message=message)
+    def get_recent_updates(user=None):
+        if user:
+            queryset = Timeline.objects.filter(
+                user__in=(list(user.get_profile().followed_tweeters.all()) + [user]))
+        else:
+            queryset = Timeline.objects.all()
+        return queryset.order_by('-update_timestamp')[0:5]
 
 class Tweeter(models.Model):
-    user = models.ForeignKey(User, unique=True)
-    followed_tweeters = models.ManyToManyField('Tweeter')
+    user = models.ForeignKey(User)
+    followed_tweeters = models.ManyToManyField(User, related_name='followed_tweeters', blank=True)
 
-    def follow(self, tweeter):
-        self.followed_tweeters.add(tweeter)
-
-    def post_message(self, message):
-        Picoblog.post_message(self, message)
-
-    @property
-    def posts(self):
-        return Picoblog.objects.filter(tweeter=self)
-
-    @property
-    def followers_tweets(self):
-        criteria = None
-        for tweeter in self.followed_tweeters.all():
-            criteria = Q(tweeter=tweeter)
-
-        #TODO try tweeter__in=self.followed_tweeters.all
-        return Picoblog.objects.filter(criteria)
+    def follow(self, user):
+        self.followed_tweeters.add(user)

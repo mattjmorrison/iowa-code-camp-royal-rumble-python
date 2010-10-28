@@ -1,9 +1,16 @@
 # Django settings for royalrumble project.
+
+import os
+
+ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
+
 from unittest import TestLoader
 TestLoader.testMethodPrefix = "should_"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+
 
 ADMINS = (
     ('Matthew J. Morrison', 'mattj.morrison@gmail.com'),
@@ -65,7 +72,6 @@ SECRET_KEY = '3*kj3eor2w!4ag!cgkv#=#s4d#z)$4^*&^nq*dh$%7(f2L#M_74'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,10 +84,13 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
+LOGIN_REDIRECT_URL = '/'
+
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    ROOT_DIR,
+    os.path.join(ROOT_DIR, 'templates'),
+    os.path.join(ROOT_DIR, '..', 'eggs', 'Django-1.2.3-py2.7.egg',
+                 'django', 'contrib', 'admin', 'templates')
 )
 
 INSTALLED_APPS = (
