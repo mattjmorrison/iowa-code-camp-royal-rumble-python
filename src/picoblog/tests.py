@@ -49,5 +49,6 @@ class TestFollowerAcceptance(test.TestCase):
         self.client.login(username="matt", password="asdf")
 
     def should_allow_user_to_follow_other_users(self):
-        response = self.client.get(reverse_url('picoblog:follow'), follow=True)
+        response = self.client.post(reverse_url('picoblog:follow'),
+                                   {'followed_tweeters':[2]}, follow=True)
         self.assertEqual([self.other_users[0]], list(response.context['followed_tweeters']))
