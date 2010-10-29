@@ -1,5 +1,6 @@
 from django.forms.models import ModelForm
 from picoblog.models import Timeline, Tweeter
+from django.contrib.auth.models import User
 
 class TimelineForm(ModelForm):
 
@@ -16,8 +17,13 @@ class TimelineForm(ModelForm):
         model = Timeline
         exclude = ('user', )
 
-
 class FollowTweetersForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(FollowTweetersForm, self).__init__(*args, **kwargs)
+        #followed_users = [tweeter.pk for tweeter in self.instance.followed_tweeters.all()]
+        queryset = User.objects.exclude(pk=self.instance.pk)
+        self.fields['followed_tweeters'].queryset = queryset
 
     class Meta:
         model = Tweeter

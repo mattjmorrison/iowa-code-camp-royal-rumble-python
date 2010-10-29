@@ -12,7 +12,6 @@ class TestPicoblogAcceptance(test.TestCase):
         for i in range(6):
             Timeline.objects.create(user=user, message="Message %s" % i)
 
-
     def should_show_all_recent_tweets_on_homepage(self):
         client = test.Client()
         response = client.get(reverse_url('picoblog:main'))
@@ -50,6 +49,5 @@ class TestFollowerAcceptance(test.TestCase):
         self.client.login(username="matt", password="asdf")
 
     def should_allow_user_to_follow_other_users(self):
-        response = self.client.get(reverse_url('picoblog:follow',
-                                               kwargs={'id':2}), follow=True)
+        response = self.client.get(reverse_url('picoblog:follow'), follow=True)
         self.assertEqual([self.other_users[0]], list(response.context['followed_tweeters']))

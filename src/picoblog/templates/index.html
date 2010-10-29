@@ -8,14 +8,14 @@
     {% if user.is_authenticated %}
         <a href="{% url logout %}?next=/">Logout</a>
         <div>
-            <form method="post"> {% csrf_token %}
+            <form method="post" action="{% url picoblog:post_message %}"> {% csrf_token %}
                 {{ form }}
                 <input type="submit" />
             </form>
         </div>
 
         <div>
-            <form method="post">{% csrf_token %}
+            <form method="post" action="{% url picoblog:follow %}">{% csrf_token %}
                 <label for="id_followed_tweeters">Follow:</label>
                 {{ follow_form.followed_tweeters }}
                 <input type="submit" />

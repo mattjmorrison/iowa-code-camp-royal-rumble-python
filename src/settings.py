@@ -94,6 +94,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'south',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -104,3 +105,4 @@ INSTALLED_APPS = (
 )
 
 AUTH_PROFILE_MODULE = 'picoblog.Tweeter'
+SOUTH_TESTS_MIGRATE = False
