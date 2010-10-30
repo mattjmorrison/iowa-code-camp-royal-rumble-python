@@ -10,7 +10,7 @@
         <div>
             <form method="post" action="{% url picoblog:post_message %}"> {% csrf_token %}
                 {{ form }}
-                <input type="submit" />
+                <input type="submit" value="Post Message"/>
             </form>
         </div>
 
@@ -18,21 +18,15 @@
             <form method="post" action="{% url picoblog:follow %}">{% csrf_token %}
                 <label for="id_followed_tweeters">Follow:</label>
                 {{ follow_form.followed_tweeters }}
-                <input type="submit" />
+                <input type="submit" value="Update Followers" />
             </form>
         </div>
     {% else %}
         <a href="{% url login %}">Login</a>
     {% endif %}
 
-    <div style="float:right;">
-        {% for tweeter in user.get_profile.followed_tweeters.all %}
-            {{ tweeter }}
-        {% endfor %}
-    </div>
-    <div style="clear:both;"></div>
-
     <div style="float:left;">
+        <h2>Timeline</h2>
         {% for message in timeline %}
             {% if forloop.first %}
                 <ul>

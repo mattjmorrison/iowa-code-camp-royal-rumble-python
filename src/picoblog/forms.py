@@ -21,7 +21,6 @@ class FollowTweetersForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(FollowTweetersForm, self).__init__(*args, **kwargs)
-        #followed_users = [tweeter.pk for tweeter in self.instance.followed_tweeters.all()]
         queryset = User.objects.exclude(pk=self.instance.pk)
         self.fields['followed_tweeters'].queryset = queryset
 
