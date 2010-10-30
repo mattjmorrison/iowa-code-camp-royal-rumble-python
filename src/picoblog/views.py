@@ -5,14 +5,14 @@ from picoblog.models import Timeline
 from picoblog.forms import TimelineForm, FollowTweetersForm
 
 def logged_in_home(request, form=None):
-    form = form or TimelineForm(request.user)
+    message_form = form or TimelineForm(request.user)
     follow_form = FollowTweetersForm(instance=request.user.get_profile())
     followed_tweeters = request.user.get_profile().followed_tweeters.all()
     timeline = Timeline.get_recent_updates(request.user)
 
     return {'timeline': timeline,
         'followed_tweeters': followed_tweeters,
-        'form':form,
+        'form':message_form,
         'follow_form':follow_form}
 
 @render_to("picoblog/templates/index.html")
