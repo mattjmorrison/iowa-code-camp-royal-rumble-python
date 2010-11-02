@@ -7,13 +7,6 @@ setup(
     author="Matthew J. Morrison",
     package_dir={'': 'src'},
     install_requires = (
-        'django==1.2.3',
         'mock',
-        'pyyaml',
-		'south',
     ),
-    entry_points=("""
-        [console_scripts]
-        manage=manage:main
-    """)
 )
