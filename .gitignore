@@ -1,9 +1,8 @@
 .installed.cfg
+/.idea
 *.pyc
 bin/*
 parts/*
 develop-eggs/*
 eggs/*
 *.egg-info
-.idea/*
-*~
