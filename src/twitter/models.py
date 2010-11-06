@@ -14,7 +14,10 @@ class Twitter(object):
     def limit_timeline_to_users(self, tweeters):
         tweet_count = 0
         for tweet in reversed(self._tweets):
-            if tweet['user'] in tweeters and tweet_count < 10:
+            if tweet_count >= 10:
+                raise StopIteration
+
+            if tweet['user'] in tweeters:
                 tweet_count += 1
                 yield tweet
 
