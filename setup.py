@@ -8,5 +8,8 @@ setup(
     package_dir={'': 'src'},
     install_requires = (
         'mock',
+        'wsgiref',
+        'pesto',
+        'Jinja2',
     ),
 )

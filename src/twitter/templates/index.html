@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title>Code Camp</title>
+</head>
+<body>
+<div>Hello</div>
+<ul>
+{% for tweet in tweets %}
+    <li>{{ tweet.user }}: {{ tweet.message }}</li>
+{% endfor %}
+</ul>
+</body>
+</html>

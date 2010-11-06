@@ -3,6 +3,7 @@
 bin
 parts
 develop-eggs
+eggs
 *.egg-info
 *.idea
 *~

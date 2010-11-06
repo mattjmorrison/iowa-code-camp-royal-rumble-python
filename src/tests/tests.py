@@ -1,5 +1,5 @@
 import unittest
-from twitter import Twitter, User
+from twitter.models import Twitter, User
 
 unittest.TestLoader.testMethodPrefix = "should_"
 
