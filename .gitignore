@@ -5,6 +5,6 @@ parts
 develop-eggs
 eggs
 *.egg-info
-*.idea
+.idea
 *~
 data_db
