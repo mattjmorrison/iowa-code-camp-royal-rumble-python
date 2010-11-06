@@ -8,11 +8,11 @@ dispatcher.match('/',
                  GET=controllers.index,
                  decorators=[to_html('index.html')])
 
-dispatcher.match('/data.json',
-                 GET=controllers.sample_data_dump,
-                 decorators=[to_json])
-
-dispatcher.match('/data.html',
+dispatcher.match('/data',
                  GET=controllers.sample_data_dump,
                  decorators=[to_html('sample.html')])
+
+dispatcher.match('/data/json',
+                 GET=controllers.sample_data_dump,
+                 decorators=[to_json])
 

@@ -1,7 +1,14 @@
 <html>
-
-<ul>
-    <li> {{ name }} </li>
-    <li> {{ status }} </li>
-</ul>
+<head>
+    <title>Code Camp</title>
+</head>
+<body>
+<div>
+    <ul>
+        {% for tweet in tweets %}
+            <li>{{ tweet.name }}: {{ tweet.status }}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
 </html>

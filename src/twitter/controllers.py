@@ -6,4 +6,7 @@ def index(request):
     return {'tweets': twitter.timeline()}
 
 def sample_data_dump(request):
-    return {'name':'Matt', 'status':'awesome',}
+    return {'tweets':[
+                {'name':'Matt', 'status':'awesome',},
+                {'name':'Brandon', 'status':'lame',},
+    ]}
