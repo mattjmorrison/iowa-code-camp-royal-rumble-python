@@ -1,6 +1,10 @@
-import sys
+import sys, os
 sys.path[0:0] = [
-    '/Users/matthewmorrison/icc_nov2010/iowa-code-camp-royal-rumble-python/eggs/setuptools-0.6c12dev_r85381-py2.7.egg',
+    os.path.join(
+            os.path.abspath(os.path.dirname(__file__)),
+            '..',
+            'eggs',
+            'setuptools-0.6c12dev_r85381-py2.7.egg')
 ]
 
 from wsgiref.util import setup_testing_defaults
