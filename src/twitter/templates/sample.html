@@ -6,7 +6,7 @@
 <div>
     <ul>
         {% for tweet in tweets %}
-            <li>{{ tweet.name }}: {{ tweet.status }}</li>
+            <li>{{ tweet.user }}: {{ tweet.message }}</li>
         {% endfor %}
     </ul>
 </div>

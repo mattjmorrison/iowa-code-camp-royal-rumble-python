@@ -1,10 +1,9 @@
 .installed.cfg
 *.pyc
-bin
-parts
-develop-eggs
-eggs
+bin/*
+parts/*
+develop-eggs/*
+eggs/*
 *.egg-info
-.idea
+.idea/*
 *~
-data_db

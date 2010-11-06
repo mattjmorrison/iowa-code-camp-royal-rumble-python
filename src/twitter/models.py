@@ -9,7 +9,7 @@ class Twitter(object):
         self._tweets.append({'user':user, 'message':message})
 
     def timeline(self):
-        return reversed(self._tweets[-10:])
+        return list(reversed(self._tweets[-10:]))
 
     def limit_timeline_to_users(self, tweeters):
         tweet_count = 0

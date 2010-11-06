@@ -8,11 +8,13 @@ dispatcher.match('/',
                  GET=controllers.index,
                  decorators=[to_html('index.html')])
 
+dispatcher.match('/post', POST=controllers.new_message)
+
 dispatcher.match('/data',
-                 GET=controllers.sample_data_dump,
+                 GET=controllers.tweet_data,
                  decorators=[to_html('sample.html')])
 
 dispatcher.match('/data/json',
-                 GET=controllers.sample_data_dump,
+                 GET=controllers.tweet_data,
                  decorators=[to_json])
 
