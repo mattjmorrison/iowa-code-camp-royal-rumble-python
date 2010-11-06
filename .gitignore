@@ -1,5 +1,5 @@
 .installed.cfg
-/.idea
+.idea
 *.pyc
 bin/*
 parts/*
